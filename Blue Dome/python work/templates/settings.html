@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content= "width=device-width, initial-scale=1.0">
+        <title>Blue Dome</title>
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        {% if group[0] == 'Administrators' %}
+            {% include 'navbar_administrator.html' %}
+        {% elif group[0] == 'Users' %}
+            {% include 'navbar_user.html' %}
+        {% endif %}
+        <div class="container">
+            <h1>Profile Settings</h1>
+            <form id="settings-form">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username">
+    
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email">
+    
+                <label for="current-password">Current Password</label>
+                <input type="password" id="current-password" name="current_password" required>
+    
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new_password" required>
+
+                <label for="confirm-new-password">Confirm New Password</label>
+                <input type="password" id="confirm-new-password" name="confirm_new_password" required>
+    
+                <button type="submit">Save Changes</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </div>
+        <script src="static/js/script.js"></script>
+    </body>
+</html>

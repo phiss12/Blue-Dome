@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Blue Dome</title>
+        <link rel="stylesheet" href="static/css/select_headers.css">
+    </head>
+    
+    <body>
+        {% if group[0] == 'Administrators' %}
+            {% include 'navbar_administrator.html' %}
+        {% elif group[0] == 'Users' %}
+            {% include 'navbar_user.html' %}
+        {% endif %}
+    <div class="upload-wrapper">
+    <form action="/select_headers" method="POST">
+        <h1>Select Headers</h1>
+        <label for="header_names"> </label><br>
+        <ul>
+            {% for header in headers %}
+                <li>
+                    <input type="checkbox" id="{{ header }}" name="header" value="{{ header }}">
+                    <label for="{{ header }}">{{ header }}</label>
+                </li>
+            {% endfor %}
+        </ul><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+</body>
+</html>
+   

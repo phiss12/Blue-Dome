@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Reset</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="reset-form">
+        <h2>Reset Password</h2>
+        <form method="POST" action="/reset">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <input type="submit" value="Request Password Reset">
+        </form>
+    </div>
+</body>
+</html>

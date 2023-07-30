@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blue Dome</title>
+    <link rel="stylesheet" href="static/css/gallery.css">
+</head>
+<body>
+    {% if group[0] == 'Administrators' %}
+        {% include 'navbar_administrator.html' %}
+    {% elif group[0] == 'Users' %}
+        {% include 'navbar_user.html' %}
+    {% endif %}
+    <div class="gallery-container">
+        <div class="image-container">
+            <div class="left-half">
+               
+                <form action="/issue" method="post">
+                    <div>
+                        <h3 style="margin-right: 10px; display: inline;">{{ 'File name' }}</h3>
+                        <p style="display: inline;">{{ file_name[current_index] }}</p>
+                    </div>
+                    {% for i in range(headers[current_index]|length ) %}
+                        {% if not validate_url(file_dict[file_name[current_index]][row_position[current_index]|string][i]) %}
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <h3 style="margin-right: 20px;">{{ headers[current_index][i] }}</h3>
+                                <p>{{ file_dict[file_name[current_index]][row_position[current_index]|string][i] }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                        <label for="issue_text">Issue with output:</label>
+                        <select id="issue_text" name="issue_text" class="select-issue">
+                            <option value="">Please select an issue</option>
+                            <option value="Sign Not Boxed">Sign Not Boxed</option>
+                            <option value="Boxed Error">Boxed Error</option>
+                            <option value="Re-Box">Re-Box</option>
+                            <option value="Error MUTCD Code">Error MUTCD Code</option>
+                            <option value="Error Description">Error Description</option>
+                            <option value="Duplicate">Duplicate</option>
+                            <option value="Spelling Error">Spelling Error</option>
+                        </select>
+                        <input type="submit" value="Submit Issue">
+                    </form>
+            </div>
+            <div class="right-half">
+                {% for i in range(headers[current_index]|length ) %}
+                    {% if validate_url(file_dict[file_name[current_index]][row_position[current_index]|string][i]) %}
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <img src="{{ file_dict[file_name[current_index]][row_position[current_index]|string][i] }}" alt="Image">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="navigation-buttons">
+                    {% if current_index > 0 %}
+                        <a href="/previous" class="arrow">◀</a>
+                    {% endif %}
+
+                    {% if current_index < file_paths|length - 1 %}
+                        <a href="/next" class="arrow">▶</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

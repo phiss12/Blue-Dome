@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blue Dome</title>
+    <link rel="stylesheet" href="static/css/users.css">
+</head>
+<body>
+    {% include 'navbar_administrator.html' %}
+    <div class="add-user-container">
+        <h2>Users</h2>
+        <button id="add-user-btn">Add User</button>
+    </div>
+    <div class="container">
+        
+        <!-- User table -->
+        <table>
+            <!-- Table headers here -->
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Group</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User rows here -->
+                {% for user in users %}
+                <tr>
+                    <!-- User data here -->
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[3] }}</td>
+                    <td>{{ user[4] }}</td>
+                    <td>
+                        <button class="edit-btn" data-id="{{ user[0] }}">Edit</button>
+                        <button class="delete-btn" data-id="{{ user[0] }}">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add user form modal -->
+    <div id="add-user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal-btn">&times;</span>
+            <h2>Add User</h2>
+            <form id="add-user-form">
+                <label for="user-name">Name</label>
+                <input type="text" id="user-name" name="user-name" required>
+
+                <label for="user-username">Username</label>
+                <input type="text" id="user-username" name="user-username" required>
+
+                <label for="user-password">Password</label>
+                <input type="password" id="user-password" name="user-password" required>
+
+                <label for="user-email">Email</label>
+                <input type="email" id="user-email" name="user-email" required>
+
+                <label for="user-groups">Group</label>
+                <select id="user-groups" name="user-groups" required>
+                    <option value="">Please select a group</option>
+                    <option value="Administrators">Administrators</option>
+                    <option value="Users">Users</option>
+                </select>
+
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+
+     <!-- Edit user form modal -->
+     <div id="edit-user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-edit-modal-btn">&times;</span>
+            <h2>Edit User</h2>
+            <form id="edit-user-form">
+
+                <label for="edit-user-name">Name</label>
+                <input id="edit-user-name">
+
+                <label for="edit-user-username">Username</label>
+                <input id="edit-user-username">
+
+                <label for="edit-user-email">Email</label>
+                <input id="edit-user-email">
+
+                <label for="edit-user-groups">Group</label>
+                <select id="edit-user-groups">
+                    <option value="">Please select a group</option>
+                    <option value="Administrators">Administrators</option>
+                    <option value="Users">Users</option>
+                </select>
+
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="static/js/users.js"></script>
+</body>
+</html>

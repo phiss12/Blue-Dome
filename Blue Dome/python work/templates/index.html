@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/index.css">
+    <title>Blue Dome</title>
+</head>
+
+<body>
+    
+    {% if group[0] == 'Administrators' %}
+        {% include 'navbar_administrator.html' %}
+    {% elif group[0] == 'Users' %}
+        {% include 'navbar_user.html' %}
+    {% endif %}
+
+	<div class="title">
+		<h1>Applications</h1>
+	</div>
+    <section class="about" id="my-projects">
+        <div class="content">
+            <div class="boxes">
+                <div class="box">
+                    <div class="topic">
+                        <a href="/excel_uploader">Excel Uploader</a>
+                    </div>
+                    <p>This feature enables users to upload Excel files and access them for viewing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer"></div>
+    </footer>
+
+    <script src="/static/js/index.js"></script>
+</body>
+
+</html>

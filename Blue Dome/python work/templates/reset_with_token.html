@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter New Password</title>
+</head>
+<body>
+    <form action="/reset_password/{{token}}" method="post">
+        <label for="password">New Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
