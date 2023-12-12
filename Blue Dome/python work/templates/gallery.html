@@ -6,10 +6,11 @@
 </head>
 <body>
     {% if group[0] == 'Administrators' %}
-        {% include 'navbar_administrator.html' %}
+        {% include 'navbar_administrator_lookup.html' %}
     {% elif group[0] == 'Users' %}
-        {% include 'navbar_user.html' %}
+        {% include 'navbar_user_lookup.html' %}
     {% endif %}
+    
     <div class="gallery-container">
         <div class="image-container">
             <div class="left-half">
@@ -20,10 +21,10 @@
                         <p style="display: inline;">{{ file_name[current_index] }}</p>
                     </div>
                     {% for i in range(headers[current_index]|length ) %}
-                        {% if not validate_url(file_dict[file_name[current_index]][row_position[current_index]|string][i]) %}
+                        {% if not validate_url(file_dict[file_name[current_index]][row_position[current_index]][i]) %}
                             <div style="display: flex; align-items: center; justify-content: center;">
                                 <h3 style="margin-right: 20px;">{{ headers[current_index][i] }}</h3>
-                                <p>{{ file_dict[file_name[current_index]][row_position[current_index]|string][i] }}</p>
+                                <p>{{ file_dict[file_name[current_index]][row_position[current_index]][i] }}</p>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -38,15 +39,22 @@
                             <option value="Error Description">Error Description</option>
                             <option value="Duplicate">Duplicate</option>
                             <option value="Spelling Error">Spelling Error</option>
+                            <option value="Retake">Retake</option>
                         </select>
                         <input type="submit" value="Submit Issue">
                     </form>
             </div>
             <div class="right-half">
                 {% for i in range(headers[current_index]|length ) %}
-                    {% if validate_url(file_dict[file_name[current_index]][row_position[current_index]|string][i]) %}
+                    {% if validate_url(file_dict[file_name[current_index]][row_position[current_index]][i]) %}
                         <div style="display: flex; align-items: center; justify-content: center;">
-                            <img src="{{ file_dict[file_name[current_index]][row_position[current_index]|string][i] }}" alt="Image">
+                            
+                            <img id="myImg" src="{{ file_dict[file_name[current_index]][row_position[current_index]][i] }}" alt="Image">
+                           
+                            <div id="myModal" class="modal">
+                                <img class="modal-content" id="img01">
+                               
+                            </div>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -62,5 +70,35 @@
             </div>
         </div>
     </div>
+    {% include 'footer.html' %}
 </body>
 </html>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+     
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        modalImg.alt = this.alt;
+        captionText.innerHTML = this.alt;
+    }
+     
+     
+    // When the user clicks on <span> (x), close the modal
+    modal.onclick = function() {
+        img01.className += " out";
+        setTimeout(function() {
+           modal.style.display = "none";
+           img01.className = "modal-content";
+         }, 400);
+        
+     }    
+        
+    </script>
+

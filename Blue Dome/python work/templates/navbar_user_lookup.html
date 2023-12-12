@@ -9,25 +9,20 @@
     <div class="navbar">
         <ul>
             <li><a href="/generate_issues">Issues</a></li>
-            <li><a href="/generate_reports">Reports</a></li>
-            <li><a href="/users">Users</a></li>
             <li><a href="/settings">Settings</a></li>
             <li><a href="/logout">Sign Out</a></li>
         </ul>
     </div>
-   
 </nav>  
 <!-- Side navigation bar for
 responsive website -->
 <div class="sideNavigationBar" id="sideNavigationBar">
     <a href="#" class="closeButton" onclick="closeNavbar()"></a>
     <a href="/generate_issues">Issues</a>
-    <a href="/generate_reports">Reports</a>
-    <a href="/users">Home</a>
     <a href="/settings">Settings</a>
     <a href="/logout">Sign Out</a>
 </div>
-
+{% include 'search.html' %}
 <script>
     src="static/js/navbar_administrator.js"
 </script>
