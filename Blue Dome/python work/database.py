@@ -39,8 +39,6 @@ def find_user(username):
     cursor = conn.cursor()
     cursor.execute("PRAGMA table_info(users);")
     columns = cursor.fetchall()
-    for column in columns:
-        print(column)
     cursor.execute("SELECT id, user_id, name, username, password, email, groups FROM users WHERE username = ?", (username,))
     user = cursor.fetchone()
     cursor.close()

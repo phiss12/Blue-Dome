@@ -13,12 +13,11 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Message, Mail
 import database_manager as dm
-from flask_session import Session  # you'll need to install this package
-import redis  # you'll need to install this package
-
+from flask_session import Session 
+import redis
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'blue_dome'
 app.config.from_pyfile('config.cfg')  # Assumes you have a mail server configuration in a file named config.cfg
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -502,7 +501,7 @@ def process():
     db.execute_query("SELECT groups FROM users WHERE user_id = ?", (user_id,))
     result = db.cursor.fetchone()
     db.close()
-
+ 
     return render_template('select_headers.html', n=num_files, headers=headers[0], file_names=file_name, group = result)
 
 
@@ -609,18 +608,32 @@ def issue():
     file_name = session['file_name']
     file_dict = session['file_dict']
     row_position = session['row_position']
-    for i in file_dict[file_name[current_index]][str(row_position[current_index])]:
+    headers = session['headers']
+    count = 0 
+    
+    for i in file_dict[file_name[current_index]][row_position[current_index]]:
+        
+        if headers[current_index][count] == 'ID':
+            id = i
+        if headers[current_index][count] == 'SIGN_UID':
+            sign_uid = i
+        if headers[current_index][count] == 'LATITUDE':
+            latitude = i
+        if headers[current_index][count] == 'LONGITUDE':
+            longitude = i
         if validate_url(i):
             image_link = i
+        count += 1
 
     
     issue_text = request.form['issue_text']
     file_name = file_name[current_index]
     
     df_existing = pd.read_excel(file_errors_path)
-
+    # ID , SIGN_UID, Lat and Long
     # Create a new DataFrame with the data you want to add
-    data = {'File Name': [file_name], 'Row Posistion': [row_position[current_index] + 1], 'Issue': [issue_text], 'Image': [image_link]}
+    
+    data = {'File Name': [file_name], 'Row Posistion': [row_position[current_index] + 1], 'ID': [id], 'SIGN_UID': [sign_uid], 'LATITUDE': [latitude], 'LONGITUDE': [longitude],'Issue': [issue_text], 'Image': [image_link]}
     df_new = pd.DataFrame(data)
     # Append the new data to the existing DataFrame
     df_combined = pd.concat([df_existing, df_new], ignore_index=True)
